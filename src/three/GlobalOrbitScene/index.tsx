@@ -89,13 +89,18 @@ const GlobalOrbitScene = () => {
 
   const wrapRef = useRef<HTMLDivElement>(null)
 
-  // Fade the whole scene out (100% → 10%) between Contact and the Footer so the
-  // orbit concludes at Contact and the footer becomes the calm visual focus.
+  // Keep the orbit at a restrained base opacity (50%) so it reads as ambient
+  // texture rather than overshadowing the content, then fade it out further
+  // (50% → 5%) between Contact and the Footer so the footer becomes the calm
+  // visual focus.
   useEffect(() => {
+    const BASE_OPACITY = 0.5
     let raf = 0
     const tick = () => {
       if (wrapRef.current) {
-        wrapRef.current.style.opacity = String(1 - smoothstep(0.9, 1, scrollSignal.progress) * 0.9)
+        wrapRef.current.style.opacity = String(
+          BASE_OPACITY * (1 - smoothstep(0.9, 1, scrollSignal.progress) * 0.9),
+        )
       }
       raf = requestAnimationFrame(tick)
     }

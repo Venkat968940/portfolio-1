@@ -1,27 +1,9 @@
 import { motion } from 'framer-motion'
-import {
-  Hero,
-  About,
-  Skills,
-  Experience,
-  Projects,
-  Services,
-  Testimonials,
-  Contact,
-} from '@/components/sections'
+import { Hero, About, Skills, Projects, Contact } from '@/components/sections'
 import { Footer } from '@/components/layout'
 import { useActiveSection } from '@/hooks'
 
-const SECTION_IDS = [
-  'home',
-  'about',
-  'skills',
-  'experience',
-  'projects',
-  'services',
-  'testimonials',
-  'contact',
-]
+const SECTION_IDS = ['home', 'about', 'skills', 'projects', 'contact']
 
 const Home = () => {
   useActiveSection(SECTION_IDS)
@@ -35,10 +17,7 @@ const Home = () => {
       <Hero />
       <About />
       <Skills />
-      <Experience />
       <Projects />
-      <Services />
-      <Testimonials />
       <Contact />
       <Footer />
     </motion.main>

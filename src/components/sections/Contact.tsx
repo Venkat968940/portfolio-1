@@ -6,10 +6,16 @@ import {
   IconButton,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import { AnimatePresence, motion } from 'framer-motion'
-import { HiCheck, HiOutlineMail, HiOutlineLocationMarker } from 'react-icons/hi'
+import {
+  HiCheck,
+  HiOutlineMail,
+  HiOutlinePhone,
+  HiOutlineLocationMarker,
+} from 'react-icons/hi'
 import { SectionWrapper } from '@/components/common/SectionWrapper'
 import { AnimatedHeading } from '@/components/common/AnimatedHeading'
 import { GlassCard } from '@/components/common/GlassCard'
@@ -27,6 +33,18 @@ type Errors = Partial<Record<keyof FormState, string>>
 type Status = 'idle' | 'submitting' | 'success'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/** Email + phone open the visitor's own client; socials open in a new tab. */
+const CONTACT_LINKS = [
+  { label: 'Email', href: `mailto:${PROFILE.email}`, icon: HiOutlineMail, external: false },
+  {
+    label: 'Phone',
+    href: `tel:${PROFILE.phone.replace(/\s/g, '')}`,
+    icon: HiOutlinePhone,
+    external: false,
+  },
+  ...SOCIALS.map((s) => ({ ...s, external: true })),
+]
 
 const validate = (form: FormState): Errors => {
   const errors: Errors = {}
@@ -50,7 +68,7 @@ export const Contact = () => {
       setErrors((prev) => ({ ...prev, [key]: undefined }))
     }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     const found = validate(form)
     if (Object.keys(found).length) {
@@ -58,8 +76,13 @@ export const Contact = () => {
       return
     }
     setStatus('submitting')
-    // Email integration hook: replace with EmailJS / Resend / API call.
-    await new Promise((r) => setTimeout(r, 1400))
+
+    const subject = `Portfolio enquiry from ${form.name}`
+    const body = `${form.message}\n\n—\n${form.name}\n${form.email}`
+    window.location.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`
+
     setStatus('success')
     setForm({ name: '', email: '', message: '' })
     setTimeout(() => setStatus('idle'), 3500)
@@ -96,92 +119,40 @@ export const Contact = () => {
               open — I’ll get back to you within a day.
             </Typography>
 
-            <Stack spacing={2}>
-              <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-                <Box sx={{ color: 'primary.main', fontSize: 22 }}>
-                  <HiOutlineMail />
-                </Box>
-                <Box>
-                  <Typography variant="caption" color="text.secondary">
-                    Email
-                  </Typography>
-                  <Typography variant="body1">{PROFILE.email}</Typography>
-                </Box>
-              </Stack>
-              <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-                <Box sx={{ color: 'primary.main', fontSize: 22 }}>
-                  <HiOutlineLocationMarker />
-                </Box>
-                <Box>
-                  <Typography variant="caption" color="text.secondary">
-                    Location
-                  </Typography>
-                  <Typography variant="body1">{PROFILE.location}</Typography>
-                </Box>
-              </Stack>
-            </Stack>
-
             <Stack direction="row" spacing={1}>
-              {SOCIALS.map(({ label, href, icon: Icon }) => (
-                <IconButton
-                  key={label}
-                  component="a"
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  onMouseEnter={() => setCursorVariant('hover')}
-                  onMouseLeave={() => setCursorVariant('default')}
-                  sx={{
-                    color: 'text.secondary',
-                    border: (t) => t.custom.glass.border,
-                    background: (t) => t.custom.glass.background,
-                    '&:hover': { color: 'primary.main', transform: 'translateY(-3px)' },
-                    transition: 'all 0.3s',
-                  }}
-                >
-                  <Icon />
-                </IconButton>
+              {CONTACT_LINKS.map(({ label, href, external, icon: Icon }) => (
+                <Tooltip key={label} title={label} arrow>
+                  <IconButton
+                    component="a"
+                    href={href}
+                    aria-label={label}
+                    {...(external
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                    onMouseEnter={() => setCursorVariant('hover')}
+                    onMouseLeave={() => setCursorVariant('default')}
+                    sx={{
+                      color: 'text.secondary',
+                      border: (t) => t.custom.glass.border,
+                      background: (t) => t.custom.glass.background,
+                      '&:hover': { color: 'primary.main', transform: 'translateY(-3px)' },
+                      transition: 'all 0.3s',
+                    }}
+                  >
+                    <Icon />
+                  </IconButton>
+                </Tooltip>
               ))}
             </Stack>
 
-            {/* interactive map placeholder */}
-            <GlassCard
-              sx={{
-                flex: 1,
-                minHeight: 180,
-                p: 0,
-                overflow: 'hidden',
-                position: 'relative',
-                display: 'grid',
-                placeItems: 'center',
-              }}
-            >
-              <Box
-                aria-hidden
-                sx={{
-                  position: 'absolute',
-                  inset: 0,
-                  opacity: 0.5,
-                  backgroundImage:
-                    'linear-gradient(rgba(124,58,237,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.2) 1px, transparent 1px)',
-                  backgroundSize: '28px 28px',
-                }}
-              />
-              <Stack sx={{ alignItems: 'center', zIndex: 1 }} spacing={1}>
-                <Box
-                  component={motion.div}
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  sx={{ color: 'primary.main', fontSize: 34 }}
-                >
-                  <HiOutlineLocationMarker />
-                </Box>
-                <Typography variant="caption" color="text.secondary">
-                  {PROFILE.location}
-                </Typography>
-              </Stack>
-            </GlassCard>
+            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+              <Box sx={{ color: 'primary.main', fontSize: 18, display: 'flex' }}>
+                <HiOutlineLocationMarker />
+              </Box>
+              <Typography variant="caption" color="text.secondary">
+                Based in {PROFILE.location}
+              </Typography>
+            </Stack>
           </Stack>
         </Box>
 

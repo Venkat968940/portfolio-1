@@ -189,6 +189,34 @@ const ProjectDrawer = ({
           <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
             {project.longDescription}
           </Typography>
+          {project.highlights && (
+            <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, mb: 3 }}>
+              {project.highlights.map((point) => (
+                <Stack
+                  key={point}
+                  component="li"
+                  direction="row"
+                  spacing={1.5}
+                  sx={{ alignItems: 'flex-start', mb: 1.5 }}
+                >
+                  <Box
+                    aria-hidden
+                    sx={{
+                      mt: '0.55em',
+                      flexShrink: 0,
+                      width: 6,
+                      height: 6,
+                      borderRadius: '50%',
+                      background: (t) => t.custom.gradient.brand,
+                    }}
+                  />
+                  <Typography variant="body2" color="text.secondary">
+                    {point}
+                  </Typography>
+                </Stack>
+              ))}
+            </Box>
+          )}
           <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5 }}>
             Built with
           </Typography>
@@ -197,7 +225,7 @@ const ProjectDrawer = ({
               <Chip key={tag} label={tag} size="small" />
             ))}
           </Stack>
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={2} sx={{ flexWrap: 'wrap', gap: 2 }}>
             {project.demo && (
               <GlassButton
                 component="a"

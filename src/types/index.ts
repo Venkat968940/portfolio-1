@@ -20,58 +20,35 @@ export interface Skill {
 
 export type SkillCategory =
   | 'Frontend'
-  | 'Backend'
-  | 'Database'
+  | 'UI & Styling'
+  | 'Backend & AI'
   | 'Tools'
-  | 'Cloud'
-  | 'UI/UX'
 
 export interface SkillGroup {
   category: SkillCategory
   skills: Skill[]
 }
 
-export interface ExperienceItem {
-  role: string
-  company: string
-  period: string
-  location: string
-  description: string
-  achievements: string[]
-}
-
 export type ProjectCategory =
-  | 'Frontend'
-  | 'Full Stack'
-  | 'UI Design'
+  | 'Enterprise'
+  | 'Dashboard'
+  | 'E-Commerce'
+  | 'Healthcare'
   | 'React'
-  | 'Node'
 
 export interface Project {
   id: string
   title: string
   description: string
   longDescription: string
+  /** Detailed contribution bullets, shown in the project drawer. */
+  highlights?: string[]
   image: string
   tags: string[]
   categories: ProjectCategory[]
   demo?: string
   github?: string
   featured?: boolean
-}
-
-export interface Service {
-  title: string
-  description: string
-  icon: IconType
-}
-
-export interface Testimonial {
-  name: string
-  role: string
-  company: string
-  quote: string
-  avatar: string
 }
 
 export interface SocialLink {
