@@ -10,13 +10,7 @@ import {
 } from 'react-icons/si'
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa6'
 import { HiOutlineSparkles } from 'react-icons/hi'
-import type {
-  NavItem,
-  Project,
-  SkillGroup,
-  SocialLink,
-  Stat,
-} from '@/types'
+import type { NavItem, Project, SkillGroup, SocialLink } from '@/types'
 
 export const PROFILE = {
   name: 'Venkatesh M',
@@ -37,13 +31,6 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Skills', id: 'skills' },
   { label: 'Projects', id: 'projects' },
   { label: 'Contact', id: 'contact' },
-]
-
-export const STATS: Stat[] = [
-  { label: 'Years of Experience', value: 8, suffix: '+' },
-  { label: 'Projects Shipped', value: 120, suffix: '+' },
-  { label: 'Technologies Mastered', value: 30, suffix: '+' },
-  { label: 'Happy Clients', value: 45, suffix: '+' },
 ]
 
 export const SKILL_GROUPS: SkillGroup[] = [

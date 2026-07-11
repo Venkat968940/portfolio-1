@@ -144,8 +144,13 @@ const ProjectDrawer = ({
     onClose={onClose}
     slotProps={{
       paper: {
+        // Stop Lenis from hijacking the wheel so the panel scrolls its own
+        // overflow instead of the landing page behind it.
+        ...({ 'data-lenis-prevent': true } as Record<string, unknown>),
         sx: {
           width: 'min(520px, 100vw)',
+          overflowY: 'auto',
+          overscrollBehavior: 'contain',
           background: (t) => t.custom.glass.background,
           backdropFilter: 'blur(28px)',
           borderLeft: (t) => t.custom.glass.border,

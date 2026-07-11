@@ -5,12 +5,6 @@ export interface NavItem {
   id: string
 }
 
-export interface Stat {
-  label: string
-  value: number
-  suffix?: string
-}
-
 export interface Skill {
   name: string
   level: number // 0 - 100

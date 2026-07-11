@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { prefersReducedMotion } from '@/utils'
 import { motion, useSpring } from 'framer-motion'
 import { Box } from '@mui/material'
@@ -37,7 +38,10 @@ export const CustomCursor = () => {
   if (!enabled) return null
   const hovering = variant === 'hover'
 
-  return (
+  // Portalled to <body> so it escapes #root's `isolation: isolate` stacking
+  // context and paints above portalled overlays (Drawer, Modal) too. zIndex is
+  // set above MUI's tooltip layer (1500) so nothing in the app covers it.
+  return createPortal(
     <>
       <Box
         component={motion.div}
@@ -52,7 +56,7 @@ export const CustomCursor = () => {
           borderRadius: '50%',
           border: `1.5px solid ${theme.palette.primary.main}`,
           pointerEvents: 'none',
-          zIndex: 9999,
+          zIndex: 100000,
           mixBlendMode: theme.palette.mode === 'dark' ? 'screen' : 'multiply',
         }}
       />
@@ -69,9 +73,10 @@ export const CustomCursor = () => {
           background: theme.custom.gradient.brand,
           boxShadow: theme.custom.glow,
           pointerEvents: 'none',
-          zIndex: 9999,
+          zIndex: 100000,
         }}
       />
-    </>
+    </>,
+    document.body,
   )
 }

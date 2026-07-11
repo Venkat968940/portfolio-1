@@ -1,29 +1,13 @@
-import { useEffect, useMemo, type ReactNode } from 'react'
+import { useMemo, type ReactNode } from 'react'
 import { ThemeProvider, CssBaseline, GlobalStyles } from '@mui/material'
 import { createAppTheme } from './theme'
-import { useThemeStore } from '@/store/useThemeStore'
 
 /**
- * Owns theme resolution: builds the MUI theme from the persisted preference,
- * keeps it in sync with the OS when preference === 'system', and injects the
- * global background / smooth-transition styles.
+ * Builds the (dark-only) MUI theme and injects the global background /
+ * smooth-transition styles.
  */
 export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
-  const mode = useThemeStore((s) => s.mode)
-  const preference = useThemeStore((s) => s.preference)
-  const setResolvedMode = useThemeStore((s) => s.setResolvedMode)
-
-  // Follow the system theme while the user hasn't picked an explicit mode.
-  useEffect(() => {
-    if (preference !== 'system') return
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const apply = () => setResolvedMode(mq.matches ? 'dark' : 'light')
-    apply()
-    mq.addEventListener('change', apply)
-    return () => mq.removeEventListener('change', apply)
-  }, [preference, setResolvedMode])
-
-  const theme = useMemo(() => createAppTheme(mode), [mode])
+  const theme = useMemo(() => createAppTheme('dark'), [])
 
   return (
     <ThemeProvider theme={theme}>

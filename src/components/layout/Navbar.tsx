@@ -13,7 +13,6 @@ import { HiMenuAlt4, HiX } from 'react-icons/hi'
 import { NAV_ITEMS, PROFILE } from '@/utils/data'
 import { scrollToSection } from '@/utils'
 import { useUIStore } from '@/store/useUIStore'
-import { ThemeSwitcher } from '@/components/common/ThemeSwitcher'
 import { GlassButton } from '@/components/common/GlassButton'
 import { MagneticButton } from '@/components/common/MagneticButton'
 
@@ -155,7 +154,6 @@ export const Navbar = () => {
           )}
 
           <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
-            <ThemeSwitcher />
             {!isMobile ? (
               <MagneticButton>
                 <GlassButton size="small" onClick={() => go('contact')}>
