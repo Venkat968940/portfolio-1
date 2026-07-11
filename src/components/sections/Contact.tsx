@@ -1,5 +1,10 @@
-import { useState } from 'react'
-import type { FormEvent } from 'react'
+import { fadeLeft, fadeRight, viewportOnce } from '@/components/animations/variants'
+import { AnimatedHeading } from '@/components/common/AnimatedHeading'
+import { GlassButton } from '@/components/common/GlassButton'
+import { GlassCard } from '@/components/common/GlassCard'
+import { SectionWrapper } from '@/components/common/SectionWrapper'
+import { useUIStore } from '@/store/useUIStore'
+import { PROFILE, SOCIALS } from '@/utils/data'
 import {
   Box,
   CircularProgress,
@@ -10,19 +15,13 @@ import {
   Typography,
 } from '@mui/material'
 import { AnimatePresence, motion } from 'framer-motion'
+import type { FormEvent } from 'react'
+import { useState } from 'react'
 import {
   HiCheck,
   HiOutlineMail,
-  HiOutlinePhone,
-  HiOutlineLocationMarker,
+  HiOutlinePhone
 } from 'react-icons/hi'
-import { SectionWrapper } from '@/components/common/SectionWrapper'
-import { AnimatedHeading } from '@/components/common/AnimatedHeading'
-import { GlassCard } from '@/components/common/GlassCard'
-import { GlassButton } from '@/components/common/GlassButton'
-import { fadeRight, fadeLeft, viewportOnce } from '@/components/animations/variants'
-import { PROFILE, SOCIALS } from '@/utils/data'
-import { useUIStore } from '@/store/useUIStore'
 
 interface FormState {
   name: string
