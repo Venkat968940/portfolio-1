@@ -20,17 +20,14 @@ export const About = () => (
     >
       <Typography variant="h5" sx={{ mb: 3, fontWeight: 500, lineHeight: 1.5 }}>
         I’m {PROFILE.firstName} — a <GradientText variant="h5">{PROFILE.role.toLowerCase()}</GradientText>{' '}
-        obsessed with the details that make interfaces feel alive.
-      </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 2.5 }}>
-        For nearly a decade I’ve partnered with startups and studios to ship
-        products that are as fast as they are beautiful. My sweet spot is the
-        intersection of design systems, motion, and performance engineering —
-        turning ambitious ideas into experiences that ship and scale.
+        who builds secure, production-grade web platforms where complex logic
+        feels effortless.
       </Typography>
       <Typography variant="body1" color="text.secondary">
-        When I’m not refining a spring curve or shaving milliseconds off a
-        render, you’ll find me exploring generative art and WebGL.
+        Working in React and TypeScript, I build multi-tenant dashboards and
+        compliance tooling across fintech, healthcare and retail — backed by
+        scalable Redux state, strict typing, and CI/CD that keeps production
+        clean.
       </Typography>
     </Box>
   </SectionWrapper>

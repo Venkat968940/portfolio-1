@@ -15,7 +15,7 @@ import type { NavItem, Project, SkillGroup, SocialLink } from '@/types'
 export const PROFILE = {
   name: 'Venkatesh M',
   firstName: 'Venkatesh',
-  role: 'React Developer',
+  role: 'Software Developer',
   tagline: 'Frontend Engineer',
   intro:
     'I craft immersive, performant web experiences where engineering precision meets cinematic design — blending React, TypeScript, Three.js and motion to build interfaces people remember.',

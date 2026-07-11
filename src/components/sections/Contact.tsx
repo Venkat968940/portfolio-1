@@ -144,15 +144,6 @@ export const Contact = () => {
                 </Tooltip>
               ))}
             </Stack>
-
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-              <Box sx={{ color: 'primary.main', fontSize: 18, display: 'flex' }}>
-                <HiOutlineLocationMarker />
-              </Box>
-              <Typography variant="caption" color="text.secondary">
-                Based in {PROFILE.location}
-              </Typography>
-            </Stack>
           </Stack>
         </Box>
 
